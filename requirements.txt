@@ -2,6 +2,6 @@ streamlit
 openai
 torch
 transformers==4.18.0
-sentence-transformers
+sentence-transformers==2.0.0
 pycountry
 requests
