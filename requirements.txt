@@ -1,0 +1,6 @@
+streamlit
+openai
+torch
+transformers==4.18.0
+sentence-transformers
+pycountry
