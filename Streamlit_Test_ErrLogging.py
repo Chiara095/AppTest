@@ -94,7 +94,7 @@ def process_answer():
         st.write("Your answer does not seem relevant to the question. Please try again.")
         return
     st.write(f"Predicted level: {levels[predicted_level]}")
-    if predicted level <= st.session_state.level + 1:
+    if predicted_level <= st.session_state.level + 1:
         st.session_state.level = min(st.session_state.level + 1, len(levels) - 1)
     else:
         st.session_state.level = min(predicted_level, len(levels) - 1)
