@@ -4,13 +4,38 @@ import torch
 from transformers import AutoTokenizer, CamembertForSequenceClassification
 from sentence_transformers import SentenceTransformer, util
 import pycountry
+import os
+import requests
+from zipfile import ZipFile
+from io import BytesIO
+
+# Function to check and download the model files
+def download_and_unzip(url, extract_to='model_directory'):
+    if not os.path.exists(extract_to):
+        os.makedirs(extract_to)
+        r = requests.get(url)
+        z = ZipFile(BytesIO(r.content))
+        z.extractall(path=extract_to)
+        st.success('Downloaded and extracted model files successfully!')
+    else:
+        st.info('Model files already downloaded.')
+
+# URL of the zip file on Google Drive
+zip_file_url = 'https://drive.google.com/uc?export=download&id=1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k'
+
+#Link to file for visualization: https://drive.google.com/file/d/1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k/view?usp=sharing
+#ZIP FILE ID: 1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k
+
+# Download and unzip model files if needed
+download_and_unzip(zip_file_url)
 
 # Set your OpenAI API key
 openai.api_key = st.secrets["openai_api_key"]
 
 # Load the tokenizer and the model
-tokenizer = AutoTokenizer.from_pretrained('C:\\Users\\berret_c\\Downloads\\best_model\\best_model\\camembert_full_515')
-model = CamembertForSequenceClassification.from_pretrained('C:\\Users\\berret_c\\Downloads\\best_model\\best_model\\camembert_full_515')
+model_dir = 'model_directory'
+tokenizer = AutoTokenizer.from_pretrained(model_dir)
+model = CamembertForSequenceClassification.from_pretrained(model_dir)
 
 #tokenizer = AutoTokenizer.from_pretrained('C:\\Users\\berret_c\\Downloads\\camembert_full\\camembert_full')
 #model = CamembertForSequenceClassification.from_pretrained('C:\\Users\\berret_c\\Downloads\\camembert_full\\camembert_full')
