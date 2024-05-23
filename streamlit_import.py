@@ -3,6 +3,11 @@ import gdown
 import streamlit as st
 from zipfile import ZipFile
 import shutil
+import openai
+import torch
+from transformers import AutoTokenizer, CamembertForSequenceClassification
+from sentence_transformers import SentenceTransformer, util
+import pycountry
 
 # Install Rust
 os.system("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y")
@@ -43,16 +48,15 @@ download_and_unzip(zip_file_url)
 
 # Adjust the model directory path
 model_dir = os.path.join('Downloads', 'camembert_full_515')  # Adjusted to point to the correct subdirectory
+
 try:
     # Attempt to load the model
     config_path = os.path.join(model_dir, 'config.json')
     if os.path.exists(config_path):
         st.info('Config file found. Proceeding to load the model...')
-        # Load your model here
-        # Example:
-        # tokenizer = AutoTokenizer.from_pretrained(model_dir)
-        # model = CamembertForSequenceClassification.from_pretrained(model_dir)
-    else:
-        st.error('Config file not found in the directory.')
-except Exception as e:
-    st.error(f"Failed to load the model: {e}")
+        
+        # Load the tokenizer and the model
+        tokenizer = AutoTokenizer.from_pretrained(model_dir)
+        model = CamembertForSequenceClassification.from_pretrained(model_dir)
+        
+        st.success('Model loaded successfully!')
