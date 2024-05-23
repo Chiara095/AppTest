@@ -154,3 +154,11 @@ def process_answer():
         st.write(f'Your final French level is {levels[-1]}.')
     else:
         st.session_state.question = generate_question(st.session_state.level)
+
+# Log the state for debugging - Define this at the top level for global access
+def log_state():
+    st.write(f"Current level: {st.session_state.level}")
+    st.write(f"User answer: {st.session_state.user_answer}")
+    st.write(f"Question: {st.session_state.question}")
+    st.write(f"Test finished: {st.session_state.test_finished}")
+    st.write(f"Relevance score: {st.session_state.relevance_score:.2f}")
