@@ -17,7 +17,7 @@ if os.path.exists(rust_env_path):
                 os.environ[key] = value
 
 # Function to check and download the model files
-def download_and_unzip(url, extract_to='model_directory'):
+def download_and_unzip(url, extract_to='Downloads'):
     if not os.path.exists(extract_to):
         os.makedirs(extract_to)
         st.info('Downloading model files...')
@@ -47,7 +47,7 @@ import pycountry
 openai.api_key = st.secrets["openai_api_key"]
 
 # Load the tokenizer and the model
-model_dir = 'model_directory'
+model_dir = 'Downloads'
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 model = CamembertForSequenceClassification.from_pretrained(model_dir)
 
