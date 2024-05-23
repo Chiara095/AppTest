@@ -71,3 +71,20 @@ openai.api_key = st.secrets["openai_api_key"]
 
 # Load the pre-trained Sentence Transformer model for semantic similarity
 semantic_model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Define language levels
+levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+
+# Initialize session state for tracking user progress and responses
+if "level" not in st.session_state:
+    st.session_state.level = 0
+if "user_answer" not in st.session_state:
+    st.session_state.user_answer = ""
+if "question" not in st.session_state:
+    st.session_state.question = ""
+if "test_finished" not in st.session_state:
+    st.session_state.test_finished = False
+if "relevance_score" not in st.session_state:
+    st.session_state.relevance_score = 0.0
+if "confirmed_country" not in st.session_state:
+    st.session_state.confirmed_country = False
