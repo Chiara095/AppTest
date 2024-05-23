@@ -3,6 +3,11 @@ import gdown
 import streamlit as st
 from zipfile import ZipFile
 import shutil
+import openai
+import torch
+from transformers import AutoTokenizer, CamembertForSequenceClassification
+from sentence_transformers import SentenceTransformer, util
+import pycountry
 
 # Install Rust
 os.system("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y")
@@ -31,25 +36,33 @@ def download_and_unzip(url, extract_to='Downloads'):
     else:
         st.info('Model files already downloaded.')
 
+    # Log contents of the directory
+    extracted_files = os.listdir(extract_to)
+    st.info(f"Extracted files: {extracted_files}")  # This will show the files in the directory
+
 # URL of the zip file on Google Drive
 zip_file_url = 'https://drive.google.com/uc?export=download&id=1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k'
 
 # Download and unzip model files if needed
 download_and_unzip(zip_file_url)
 
-import openai
-import torch
-from transformers import AutoTokenizer, CamembertForSequenceClassification
-from sentence_transformers import SentenceTransformer, util
-import pycountry
+# Adjust the model directory path
+model_dir = os.path.join('Downloads', 'camembert_full_515')  # Adjusted to point to the correct subdirectory
+
+try:
+    # Attempt to load the model
+    config_path = os.path.join(model_dir, 'config.json')
+    if os.path.exists(config_path):
+        st.info('Config file found. Proceeding to load the model...')
+        
+        # Load the tokenizer and the model
+        tokenizer = AutoTokenizer.from_pretrained(model_dir)
+        model = CamembertForSequenceClassification.from_pretrained(model_dir)
+        
+        st.success('Model loaded successfully!')
 
 # Set your OpenAI API key
 openai.api_key = st.secrets["openai_api_key"]
-
-# Load the tokenizer and the model
-model_dir = 'Downloads'
-tokenizer = AutoTokenizer.from_pretrained(model_dir)
-model = CamembertForSequenceClassification.from_pretrained(model_dir)
 
 # Load the pre-trained Sentence Transformer model for semantic similarity
 semantic_model = SentenceTransformer('all-MiniLM-L6-v2')
