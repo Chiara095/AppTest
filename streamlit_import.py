@@ -41,14 +41,17 @@ zip_file_url = 'https://drive.google.com/uc?export=download&id=1CfXmznt24jEHRyym
 # Download and unzip model files if needed
 download_and_unzip(zip_file_url)
 
-# Load the model using the correct path
-model_dir = 'Downloads'  # Ensure this is the correct path
+# Adjust the model directory path
+model_dir = os.path.join('Downloads', 'camembert_full_515')  # Adjusted to point to the correct subdirectory
 try:
     # Attempt to load the model
     config_path = os.path.join(model_dir, 'config.json')
     if os.path.exists(config_path):
         st.info('Config file found. Proceeding to load the model...')
         # Load your model here
+        # Example:
+        # tokenizer = AutoTokenizer.from_pretrained(model_dir)
+        # model = CamembertForSequenceClassification.from_pretrained(model_dir)
     else:
         st.error('Config file not found in the directory.')
 except Exception as e:
