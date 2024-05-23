@@ -65,3 +65,6 @@ try:
         st.error('Config file not found. Please check the extracted files and the path.')
 except Exception as e:
     st.error(f'Error loading the model: {e}')
+
+# Set your OpenAI API key
+openai.api_key = st.secrets["openai_api_key"]
