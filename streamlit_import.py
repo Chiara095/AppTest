@@ -90,18 +90,18 @@ if "confirmed_country" not in st.session_state:
     st.session_state.confirmed_country = False
 
 # Define the raw URLs for the images
-image_path_left = 'https://raw.githubusercontent.com/Chiara095/AppTest/main/path/to/Berre.png'
-image_path_right = 'https://raw.githubusercontent.com/Chiara095/AppTest/main/path/to/Vaient.png'
+image_path_left = 'https://raw.githubusercontent.com/Chiara095/AppTest/main/Berre.png'
+image_path_right = 'https://raw.githubusercontent.com/Chiara095/AppTest/main/Vaient.png'
 
 # Display branding images and title in the app header
 col1, col2, col3 = st.columns([1, 2, 1])
 with col1:
     st.markdown("<p style='text-align: center;'>Berre</p>", unsafe_allow_html=True)
-    st.image('C:\\Users\\berret_c\\Documents\\GitHub\\dsml_project\\streamlit\\Berre.png', width=150)
+    st.image(image_path_left, width=150)
 
 with col2:
     st.markdown("<h1 style='text-align: center;'>Welcome to Berrevaient's French Proficiency Test!</h1>", unsafe_allow_html=True)
 
 with col3:
     st.markdown("<p style='text-align: center;'>Vaient</p>", unsafe_allow_html=True)
-    st.image('C:\\Users\\berret_c\\Documents\\GitHub\\dsml_project\\streamlit\\Vaient.png', width=150)
+    st.image(image_path_right, width=150)
