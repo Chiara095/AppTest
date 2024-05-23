@@ -1,7 +1,0 @@
-streamlit
-openai
-torch
-transformers==4.11.3
-sentence-transformers
-pycountry
-requests
