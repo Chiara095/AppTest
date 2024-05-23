@@ -5,3 +5,4 @@ transformers
 sentence-transformers
 pycountry
 requests
+gdown
