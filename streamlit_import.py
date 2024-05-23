@@ -88,3 +88,16 @@ if "relevance_score" not in st.session_state:
     st.session_state.relevance_score = 0.0
 if "confirmed_country" not in st.session_state:
     st.session_state.confirmed_country = False
+
+# Display branding images and title in the app header
+col1, col2, col3 = st.columns([1, 2, 1])
+with col1:
+    st.markdown("<p style='text-align: center;'>Berre</p>", unsafe_allow_html=True)
+    st.image('C:\\Users\\berret_c\\Documents\\GitHub\\dsml_project\\streamlit\\Berre.png', width=150)
+
+with col2:
+    st.markdown("<h1 style='text-align: center;'>Welcome to Berrevaient's French Proficiency Test!</h1>", unsafe_allow_html=True)
+
+with col3:
+    st.markdown("<p style='text-align: center;'>Vaient</p>", unsafe_allow_html=True)
+    st.image('C:\\Users\\berret_c\\Documents\\GitHub\\dsml_project\\streamlit\\Vaient.png', width=150)
