@@ -2,7 +2,6 @@ import os
 import gdown
 import streamlit as st
 from zipfile import ZipFile
-import shutil
 import openai
 import torch
 from transformers import AutoTokenizer, CamembertForSequenceClassification
@@ -52,6 +51,8 @@ model_dir = os.path.join('Downloads', 'camembert_full_515')  # Adjusted to point
 try:
     # Attempt to load the model
     config_path = os.path.join(model_dir, 'config.json')
+    st.info(f'Looking for config file at: {config_path}')
+    
     if os.path.exists(config_path):
         st.info('Config file found. Proceeding to load the model...')
         
@@ -60,3 +61,7 @@ try:
         model = CamembertForSequenceClassification.from_pretrained(model_dir)
         
         st.success('Model loaded successfully!')
+    else:
+        st.error('Config file not found. Please check the extracted files and the path.')
+except Exception as e:
+    st.error(f'Error loading the model: {e}')
