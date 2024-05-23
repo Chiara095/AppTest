@@ -179,3 +179,15 @@ if not st.session_state.confirmed_country:
             st.session_state.confirmed_country = True
             st.info("Proceed with the French proficiency test.")
             st.session_state.question = generate_question(st.session_state.level)
+
+# Generate the initial question if not already set
+if st.session_state.confirmed_country and not st.session_state.question and not st.session_state.test_finished:
+    st.session_state.question = generate_question(st.session_state.level)
+
+# Display the question and get the user's answer
+if st.session_state.confirmed_country and not st.session_state.test_finished:
+
+    st.markdown("""
+    **Answer the following questions in French to determine your language proficiency level.**  
+    **This will help you to find your Tandem Match and tailor your learning program based on your conversations.**
+    """)
