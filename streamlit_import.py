@@ -201,3 +201,13 @@ if st.session_state.confirmed_country and not st.session_state.test_finished:
     if st.button('Submit'):
         process_answer()
         st.experimental_rerun()  # Use experimental_rerun to rerun the script
+
+    # Display the slider as a progress bar
+    st.slider('Your Current Level:', 0, len(levels) - 1, st.session_state.level, format=levels[st.session_state.level])
+
+# Ensure logging and state displays only activate after country confirmation
+if st.session_state.confirmed_country:
+    log_state()
+
+if st.session_state.test_finished and st.session_state.confirmed_country:
+    st.write(f'Test finished. Your final French level is {levels[st.session_state.level]}.')
