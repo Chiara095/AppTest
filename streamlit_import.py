@@ -171,3 +171,11 @@ if not st.session_state.confirmed_country:
         def is_french_speaking(country_code):
             french_speaking_countries = ['FR', 'BE', 'CH', 'CA', 'LU', 'MC', 'CD', 'CI', 'SN', 'ML', 'BF', 'NE', 'TD', 'GN', 'CF', 'CG', 'GA', 'DJ', 'KM', 'MG', 'TG', 'BJ']
             return country_code in french_speaking_countries
+
+        if country_obj and is_french_speaking(country_obj.alpha_2):
+            st.success(f"In {selected_country}, French is a native language. You do not need to take the proficiency test.")
+            st.session_state.test_finished = True
+        else:
+            st.session_state.confirmed_country = True
+            st.info("Proceed with the French proficiency test.")
+            st.session_state.question = generate_question(st.session_state.level)
