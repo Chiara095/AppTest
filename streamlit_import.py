@@ -89,6 +89,10 @@ if "relevance_score" not in st.session_state:
 if "confirmed_country" not in st.session_state:
     st.session_state.confirmed_country = False
 
+# Define the raw URLs for the images
+image_path_left = 'https://raw.githubusercontent.com/Chiara095/AppTest/main/path/to/Berre.png'
+image_path_right = 'https://raw.githubusercontent.com/Chiara095/AppTest/main/path/to/Vaient.png'
+
 # Display branding images and title in the app header
 col1, col2, col3 = st.columns([1, 2, 1])
 with col1:
