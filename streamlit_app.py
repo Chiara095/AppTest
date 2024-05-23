@@ -44,7 +44,7 @@ from sentence_transformers import SentenceTransformer, util
 import pycountry
 
 # Set your OpenAI API key
-openai.api_key = st.secrets['openai.api_key']
+openai.api_key = st.secrets['openai_api_key']
 
 # Load the tokenizer and the model
 model_dir = 'model_directory'
