@@ -162,3 +162,12 @@ def log_state():
     st.write(f"Question: {st.session_state.question}")
     st.write(f"Test finished: {st.session_state.test_finished}")
     st.write(f"Relevance score: {st.session_state.relevance_score:.2f}")
+
+# Country selection and check if French is an official language
+if not st.session_state.confirmed_country:
+    selected_country = st.selectbox("Select your country of origin:", sorted([country.name for country in pycountry.countries]))
+    if st.button("Confirm Country"):
+        country_obj = pycountry.countries.get(name=selected_country)
+        def is_french_speaking(country_code):
+            french_speaking_countries = ['FR', 'BE', 'CH', 'CA', 'LU', 'MC', 'CD', 'CI', 'SN', 'ML', 'BF', 'NE', 'TD', 'GN', 'CF', 'CG', 'GA', 'DJ', 'KM', 'MG', 'TG', 'BJ']
+            return country_code in french_speaking_countries
