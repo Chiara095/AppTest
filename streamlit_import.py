@@ -191,3 +191,13 @@ if st.session_state.confirmed_country and not st.session_state.test_finished:
     **Answer the following questions in French to determine your language proficiency level.**  
     **This will help you to find your Tandem Match and tailor your learning program based on your conversations.**
     """)
+
+    st.write(f'Question for level {levels[st.session_state.level]}: {st.session_state.question}')
+
+    # Display the text input widget with a unique key for each level
+    st.session_state.user_answer = st.text_input('Your answer', key=f'user_answer_{st.session_state.level}')
+
+    # Display the button for submitting the answer
+    if st.button('Submit'):
+        process_answer()
+        st.experimental_rerun()  # Use experimental_rerun to rerun the script
