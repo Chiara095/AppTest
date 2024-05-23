@@ -1,0 +1,7 @@
+streamlit
+openai
+torch
+transformers
+sentence-transformers
+pycountry
+requests
