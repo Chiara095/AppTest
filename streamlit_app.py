@@ -1,9 +1,8 @@
 import os
-
-# Install Rust
-os.system("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y")
-
-import os
+import gdown
+import streamlit as st
+from zipfile import ZipFile
+import shutil
 
 # Install Rust
 os.system("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y")
@@ -17,42 +16,32 @@ if os.path.exists(rust_env_path):
                 key, value = line.replace('export ', '').strip().split('=')
                 os.environ[key] = value
 
-import streamlit as st
+# Function to check and download the model files
+def download_and_unzip(url, extract_to='model_directory'):
+    if not os.path.exists(extract_to):
+        os.makedirs(extract_to)
+        st.info('Downloading model files...')
+        output_path = f"{extract_to}/model.zip"
+        gdown.download(url, output_path, quiet=False)
+        st.info('Extracting model files...')
+        with ZipFile(output_path, 'r') as zip_ref:
+            zip_ref.extractall(extract_to)
+        os.remove(output_path)
+        st.success('Downloaded and extracted model files successfully!')
+    else:
+        st.info('Model files already downloaded.')
+
+# URL of the zip file on Google Drive
+zip_file_url = 'https://drive.google.com/uc?export=download&id=1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k'
+
+# Download and unzip model files if needed
+download_and_unzip(zip_file_url)
+
 import openai
 import torch
 from transformers import AutoTokenizer, CamembertForSequenceClassification
 from sentence_transformers import SentenceTransformer, util
 import pycountry
-import requests
-from zipfile import ZipFile
-from io import BytesIO
-
-# Function to check and download the model files
-def download_and_unzip(url, extract_to='model_directory'):
-    try:
-        if not os.path.exists(extract_to):
-            os.makedirs(extract_to)
-            st.info('Downloading model files...')
-            r = requests.get(url)
-            if r.status_code == 200:
-                z = ZipFile(BytesIO(r.content))
-                z.extractall(path=extract_to)
-                st.success('Downloaded and extracted model files successfully!')
-            else:
-                st.error(f"Failed to download model files: Status code {r.status_code}")
-        else:
-            st.info('Model files already downloaded.')
-    except Exception as e:
-        st.error(f"Failed to download or extract model files: {e}")
-
-# URL of the zip file on Google Drive
-zip_file_url = 'https://drive.google.com/uc?export=download&id=1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k'
-
-#Link to file for visualization: https://drive.google.com/file/d/1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k/view?usp=sharing
-#ZIP FILE ID: 1CfXmznt24jEHRyymtxYg7aiyyN6AdY-k
-
-# Download and unzip model files if needed
-download_and_unzip(zip_file_url)
 
 # Set your OpenAI API key
 openai.api_key = st.secrets["openai_api_key"]
