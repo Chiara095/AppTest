@@ -114,3 +114,9 @@ def generate_question(level):
                   {"role": "user", "content": f"Generate a French question for level {levels[level]}."}]
     )
     return response['choices'][0]['message']['content']
+
+# Compute the semantic similarity between the question and the answer
+def compute_similarity(question, answer):
+    embeddings = semantic_model.encode([question, answer])
+    similarity = util.pytorch_cos_sim(embeddings[0], embeddings[1])
+    return similarity.item()
