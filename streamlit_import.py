@@ -120,3 +120,37 @@ def compute_similarity(question, answer):
     embeddings = semantic_model.encode([question, answer])
     similarity = util.pytorch_cos_sim(embeddings[0], embeddings[1])
     return similarity.item()
+
+# Process user answer and level advancement
+def process_answer():
+    # Tokenize the user's answer
+    inputs = tokenizer(st.session_state.user_answer, return_tensors='pt')
+
+    # Make a prediction with your model
+    outputs = model(**inputs)
+
+     # Extract the predicted level from the outputs
+    predicted_level = outputs.logits.argmax(-1).item()
+
+    # Compute similarity
+    st.session_state.relevance_score = compute_similarity(st.session_state.question, st.session_state.user_answer)
+    st.write(f"Relevance score: {st.session_state.relevance_score:.2f}")
+
+    if st.session_state.relevance_score < 0.5:
+        st.write("Your answer does not seem relevant to the question. Please try again.")
+        return
+    
+    st.write(f"Predicted level: {levels[predicted_level]}")
+
+    # Check if answer predicts a level at or below the current level, or one level above
+    if predicted_level <= st.session_state.level + 1:
+        st.session_state.level = min(st.session_state.level + 1, len(levels) - 1)
+    else:
+        st.session_state.level = min(predicted_level, len(levels) - 1)
+    
+    # Check if maximum level is reached or exceeded
+    if st.session_state.level >= len(levels) - 1:
+        st.session_state.test_finished = True
+        st.write(f'Your final French level is {levels[-1]}.')
+    else:
+        st.session_state.question = generate_question(st.session_state.level)
