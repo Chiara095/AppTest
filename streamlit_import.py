@@ -68,3 +68,6 @@ except Exception as e:
 
 # Set your OpenAI API key
 openai.api_key = st.secrets["openai_api_key"]
+
+# Load the pre-trained Sentence Transformer model for semantic similarity
+semantic_model = SentenceTransformer('all-MiniLM-L6-v2')
